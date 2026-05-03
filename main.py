@@ -1,15 +1,7 @@
 # this is a twilight cyoa game. you are going to play as a twilight fan in 2008 in highschool
 # the choices you make determine your ending and there are doing to be three endings maybe
 
-import sys
 import pygame
-
-
-pygame.init()
-window_width, window_height = 800, 600
-display_surface = pygame.display.set_mode((window_width, window_height))
-pygame.display.set_caption("Twilight CYOA Game")
-running = True
 
 STORY = {
     "start": {
@@ -19,96 +11,120 @@ STORY = {
             "You have to choose Team Edward or Team Jacob..."
         ),
         "choices": [
-            ("Team Edward", "edward"),
-            ("Team Jacob",  "jacob"),
+            ("Team Edward", "edward_clothes"),
+            ("Team Jacob",  "jacob_clothes"),
         ],
     },
 
-    "edward": {
-    "text": (
-        "You choose Team Edward. Bella and him are meant to be together."
-            "You put on a sweater, skinny low rise jeans, and your beat up converses dressed like Bella."
-            ),
-    "choices": [
-        ("Head to school", "edward_school"),
-    ],
-},
+    "edward_clothes": {
+        "text": (
+            "You choose Team Edward. Bella and him are meant to be together."
+            "What do you wear to school?"
+        ),
+        "choices": [
+            ("Bella inspired outfit", "bella_outfit"),
+            ("Team Edward shirt", "edward_shirt"),
+        ],
+    },
+
+    "bella_outfit": {
+        "text": (
+            "You put on a lowrise skinny jeans, beat up converses and a sweater."
+            "You're so mysterious, just like Bella...",
+        ),
+        "choices": [
+            ("Go to school", "bella_school"),
+        ],
+    },
+
+    "edward_shirt": {
+        "text": (
+            "You put on your Team Edward shirt."
+            "Team Edward for life...",
+        ),
+        "choices": [
+            ("Head to school", "edward_school"),
+        ],
+    },
+    
+    "bella_school": {
+        "text": (
+            "You look so mysterious and brooding, just like Bella. You get a few compliments but also some weird looks."
+            "You have your headphones in and walk striaght to class while listening to the new soundtrack."
+            "There is nothing that shows your passion for this movie."
+            "You just look emo..."
+        ),
+        "choices": [
+            ("Continue", "bella_continued"),
+        ],
+    },
+
+    "edward_shirt": {
+        "text": (
+            "You wear your Team Edward shirt."
+            "He's so much better than Jacob"
+        ),
+        "choices": [
+            ("Go to school", "edward_school"),
+        ],
+    },
 
     "edward_school": {
         "text": (
-            "You walk into school, the air in the hallway is thick with a mix of heavy rain scented and sweet smell of Victoria's Secret 'Love Spell'"
-            "You see a girl a girl wearing a Team Edward shirt and another in a Team Jacob shirt. "
-            "You arrive at your locker, ticket stub in hand. "
-            "Do you tape it to the door for everyone to see?"
+            "You go to school wearing your Team Edward shirt."
+            "Some people are looking at you weird..."
+            "A group of girls come up to you and start talking about the movie."
+            "'I LOVE YOUR SHIRT. WHERE DID YOU GET IT?'"
+            "'HAVE YOU LISTENED TO THE SOUNDTRACK???'"
         ),
         "choices": [
-            ("Tape it to the locker",       "edward_taped"),
-            ("Keep it safe in your pocket", "edward_pocket"),
+            ("Continue talking to them", "edward_talk"),
         ],
     },
-
-    "edward_taped": {
-        "text": "You tape it up proudly and head to class"
-                "Everyone is looking at you."
-                "People are waving at you and wispering about others"
-                "You meet up with your friends. They ask you...",
-        "choices": [
-            ("Did you listen to the soundtrack?", "edward_talk"),
-        ],
-    },
-
-    "edward_pocket": {
-        "text": "You tuck it away for safekeeping. (Continue your story from here...)",
-        "choices": [        
-            # ...
-        ],
-    },
-
+    
     "edward_talk": {
-        "text": "You say yes and they start talking about how much they love the movie",
-        "choices": [
-            ("What's your favorite scene?", "edward_scene"),
-        ],
-    },
-
-    "jacob": {
-    "text": (
-        "You choose Team Jacob. Bella and him are meant to be together."
-            "You put on a sweater, skinny low rise jeans, and your beat up converses dressed like Bella."
-            ),
-        "choices": [
-            ("Head to school", "jacob_school"),
-        ],
-    },
-
-    "jacob_school": {
         "text": (
-            "You walk into school, the air in the hallway is thick with a mix of heavy rain scented and sweet smell of Victoria's Secret 'Love Spell'"
-            "You see a girl a girl wearing a Team Edward shirt and another in a Team Jacob shirt. "
-            "You arrive at your locker, ticket stub in hand. "
-            "Do you tape it to the door for everyone to see?"
+            "You continue to talk about the movie and your love for edward then head to class"
+            "You take your seat and have a weird feeling..."
+            "Someone is staring at you..."
+            "You look up and see a girl wearing a Team Jacob shirt judging you..."
         ),
         "choices": [
-            ("Tape it to the locker",       "jacob_taped"),
-            ("Keep it safe in your pocket", "jacob_pocket"),
+            ("Ignore her and continue with class", "edward_ignoring"),
+            ("Stare at her back", "edward_staring"),
         ],
     },
 
-    "jacob_taped": {
-        "text": "You tape it up proudly and head to class"
-                "Everyone is looking at you."
-                "Some of your friends are side eyeing you and whispering about you."
-                "No one is talking to you.",
+    "edward_ignoring": {
+        "text": (
+            "You ignore her and continue with class."
+            "You feel her eyes staring at you the whole time."
+            "You feel like you need to do something"
+        ),
         "choices": [
-            ("Start talking to your friends.", "jacob_talk"),
-            ("Ignore them and head to class.", "jacob_ignore"),
+            ("Go up to her", "edward_confronting"),
+            ("Ignore her and continue with class", "edward_ignoring2"),
         ],
     },
 
-    "jacob_pocket": {
-        "text": "You tuck it away for safekeeping. (Continue your story from here...)",
+    "edward_staring": {
+        "text": (
+            "You stare at her back."
+            "She comes up to you and says 'I see you like Twilight'"
+        ),
         "choices": [
-            # ...
+            ("I love the movie.", "edward_confronting2"),
+            ("I love Edward, he's perfect for Bella", "edward_confronting3"),
         ],
     },
-}
+
+    "edward_confronting": {
+        "text": (
+            "'Hello?'"
+            "'Why do you keep staring at me???'"
+            "She looks at you with a disgusted look. 'Jacob is way much better.'"
+            "You stand there jawdropped."
+        ),
+        "choices": [
+            ("Continue", "edward_confronting2"),
+        ],
